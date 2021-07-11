@@ -14,6 +14,9 @@ namespace ChessAI
     //lett = col
     public partial class MainWindow : Window
     {
+        private static readonly int col = 0;
+        private static readonly int row = 1;
+
         private Piece[,] blackPieces, whitePieces;
         public MainWindow()
         {
@@ -34,7 +37,13 @@ namespace ChessAI
                 if(((ObservableCollection<int>)sender).Count > 1)
                 {
                     int[] locations = ((ObservableCollection<int>)sender).ToList().ToArray();
-                    Console.WriteLine("New location: " + ChessBoard.boardLoc(locations));
+                    foreach (UIElement ele in chessBoard.Children)
+                    {
+                        if(Grid.GetColumn(ele) ==  && Grid.GetRow(ele) == locations[row] && ele is Image)
+                        {
+                            Grid.SetColumn(ele,location)
+                        }
+                    }
                 }
             }
         }
@@ -139,7 +148,7 @@ namespace ChessAI
 
         private void MenuItem_Click_1(object sender, RoutedEventArgs e)
         {
-            blackPieces[0, 0].movePiece(1, 1);
+            blackPieces[0, 0].movePiece(4, 4);
         }
 
         private void MenuItem_Click(object sender, RoutedEventArgs e)

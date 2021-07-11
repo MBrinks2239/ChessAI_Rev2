@@ -27,6 +27,7 @@ namespace ChessAI
         private static readonly int row = 1;
 
         private PieceType type;
+        private int[] oldLocation;
         private ObservableCollection<int> location;
 
         public Piece(PieceType _type, params int[] _location)
@@ -35,6 +36,11 @@ namespace ChessAI
             location = new ObservableCollection<int>();
             location.Add(_location[col]);
             location.Add(_location[row]);
+        }
+
+        public int[] getOldLocation()
+        {
+            return oldLocation;
         }
 
         public ObservableCollection<int> GetLocation()
@@ -47,6 +53,12 @@ namespace ChessAI
             location.Clear();
             location.Add(_location[col]);
             location.Add(_location[row]);
+        }
+
+        public void updateOldPlace()
+        {
+            oldLocation[0] = location.ElementAt(0);
+            oldLocation[1] = location.ElementAt(1);
         }
 
         public PieceType GetPieceType()
