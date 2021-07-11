@@ -63,12 +63,15 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="ChessBoard.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Piece.cs" />
+    <Compile Include="PieceType.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -93,6 +96,22 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="resources\images\pieces\black\bishop.png" />
+    <Resource Include="resources\images\pieces\black\king.png" />
+    <Resource Include="resources\images\pieces\black\knight.png" />
+    <Resource Include="resources\images\pieces\black\pawn.png" />
+    <Resource Include="resources\images\pieces\black\queen.png" />
+    <Resource Include="resources\images\pieces\black\rook.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="resources\images\pieces\white\bishop.png" />
+    <Resource Include="resources\images\pieces\white\king.png" />
+    <Resource Include="resources\images\pieces\white\knight.png" />
+    <Resource Include="resources\images\pieces\white\pawn.png" />
+    <Resource Include="resources\images\pieces\white\queen.png" />
+    <Resource Include="resources\images\pieces\white\rook.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
