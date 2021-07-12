@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:ChessAI"
         mc:Ignorable="d"
         Title="MainWindow" Height="900" Width="1600"
-        MinHeight="900" MinWidth="800" Background="#272522">
+        MinHeight="900" MinWidth="900" Background="#272522" Icon="resources/images/icon.ico">
     <Grid>
         <Menu FontSize="14" VerticalAlignment="Top">
             <MenuItem Header="_File...">
