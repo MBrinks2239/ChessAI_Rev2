@@ -13,7 +13,7 @@ Choose Player vs Player, Player vs AI, or AI vs AI!
 
 ## A word
 I am making this after making [Hexapawn](https://github.com/MBrinks2239/Hexapawn). 
-I made Hexapawn when is was in my final year of high school.
+I made Hexapawn when I was in my final year of high school.
 
 Look / use it at your own discretion. The code is very bad and it barely functions. 
 I'm still not 100% sure if it actually does what it is suppose to.
