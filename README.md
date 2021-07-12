@@ -46,4 +46,4 @@ Here is a list of featers that are either: Already added, In progress, TODO, or 
 * The AI
 
 ### Removed
-Noting as of now
+Nothing as of now
