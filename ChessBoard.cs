@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ChessAI
 {
-    class ChessBoard
+    public class ChessBoard
     {
         /// <summary>
         /// <list>

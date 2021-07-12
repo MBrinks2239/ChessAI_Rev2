@@ -11,8 +11,11 @@
         <Menu FontSize="14" VerticalAlignment="Top">
             <MenuItem Header="_File...">
                 <MenuItem Header="_Save"/>
-                <MenuItem Header="_Load" Click="MenuItem_Click_1"/>
-                <MenuItem Header="_Exit" Click="MenuItem_Click"/>
+                <MenuItem Header="_Load"/>
+                <MenuItem Header="_Exit" Click="ExitClick"/>
+            </MenuItem>
+            <MenuItem Header="Board">
+                <MenuItem Header="_Reset" Click="ResetBoard"/>
             </MenuItem>
         </Menu>
         <Grid x:Name="mainGrid">

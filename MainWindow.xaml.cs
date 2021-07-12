@@ -16,19 +16,14 @@ namespace ChessAI
     {
         private static readonly int col = 0;
         private static readonly int row = 1;
+        private Piece pieceToMove;
+        private Color turn;
 
-        private Piece[,] blackPieces, whitePieces;
+        //private Piece[,] blackPieces, whitePieces;
         public MainWindow()
         {
             InitializeComponent();
-            blackPieces = new Piece[8, 8];
-            whitePieces = new Piece[8, 8];
-
-            blackPieces[0, 0] = new Piece(PieceType.ROOK, 0,0);
-
-            blackPieces[0, 0].GetLocation().CollectionChanged += listen;
-            InitChessBoard();
-            FillChessBoard();
+            ResetBoard(null,null);
         }
 
         private void listen(object sender, NotifyCollectionChangedEventArgs e)
@@ -37,11 +32,16 @@ namespace ChessAI
                 if(((ObservableCollection<int>)sender).Count > 1)
                 {
                     int[] locations = ((ObservableCollection<int>)sender).ToList().ToArray();
-                    foreach (UIElement ele in chessBoard.Children)
+                    foreach (object ele in chessBoard.Children)
                     {
-                        if(Grid.GetColumn(ele) ==  && Grid.GetRow(ele) == locations[row] && ele is Image)
+                        if(ele is Piece)
                         {
-                            Grid.SetColumn(ele,location)
+                            Piece piece = (Piece)ele;
+                            if (piece.GetLocation() == sender)
+                            {
+                                Grid.SetColumn(piece, locations[col]);
+                                Grid.SetRow(piece, locations[row]);
+                            }
                         }
                     }
                 }
@@ -50,44 +50,47 @@ namespace ChessAI
 
         private void FillChessBoard()
         {
-            AddChessPiece(Piece.blackRook, "a8");
-            AddChessPiece(Piece.blackRook, "h8");
-            AddChessPiece(Piece.blackBishop, "c8");
-            AddChessPiece(Piece.blackBishop, "f8");
-            AddChessPiece(Piece.blackKnight, "b8");
-            AddChessPiece(Piece.blackKnight, "g8");
-            AddChessPiece(Piece.blackQueen, "d8");
-            AddChessPiece(Piece.blackKing, "e8");
-            AddChessPiece(Piece.blackPawn, "a7");
-            AddChessPiece(Piece.blackPawn, "b7");
-            AddChessPiece(Piece.blackPawn, "c7");
-            AddChessPiece(Piece.blackPawn, "d7");
-            AddChessPiece(Piece.blackPawn, "e7");
-            AddChessPiece(Piece.blackPawn, "f7");
-            AddChessPiece(Piece.blackPawn, "g7");
-            AddChessPiece(Piece.blackPawn, "h7");
+            AddChessPiece(Piece.blackRook, PieceType.ROOK, Colors.Black, "a8");
+            AddChessPiece(Piece.blackRook, PieceType.ROOK, Colors.Black, "h8");
+            AddChessPiece(Piece.blackBishop, PieceType.BISHOP, Colors.Black, "c8");
+            AddChessPiece(Piece.blackBishop, PieceType.BISHOP, Colors.Black, "f8");
+            AddChessPiece(Piece.blackKnight, PieceType.KNIGHT, Colors.Black, "b8");
+            AddChessPiece(Piece.blackKnight, PieceType.KNIGHT, Colors.Black, "g8");
+            AddChessPiece(Piece.blackQueen, PieceType.QUEEN, Colors.Black, "d8");
+            AddChessPiece(Piece.blackKing, PieceType.KING, Colors.Black, "e8");
+            AddChessPiece(Piece.blackPawn, PieceType.PAWN, Colors.Black, "a7");
+            AddChessPiece(Piece.blackPawn, PieceType.PAWN, Colors.Black, "b7");
+            AddChessPiece(Piece.blackPawn, PieceType.PAWN, Colors.Black, "c7");
+            AddChessPiece(Piece.blackPawn, PieceType.PAWN, Colors.Black, "d7");
+            AddChessPiece(Piece.blackPawn, PieceType.PAWN, Colors.Black, "e7");
+            AddChessPiece(Piece.blackPawn, PieceType.PAWN, Colors.Black, "f7");
+            AddChessPiece(Piece.blackPawn, PieceType.PAWN, Colors.Black, "g7");
+            AddChessPiece(Piece.blackPawn, PieceType.PAWN, Colors.Black, "h7");
 
-            AddChessPiece(Piece.whiteRook, "a1");
-            AddChessPiece(Piece.whiteRook, "h1");
-            AddChessPiece(Piece.whiteBishop, "c1");
-            AddChessPiece(Piece.whiteBishop, "f1");
-            AddChessPiece(Piece.whiteKnight, "b1");
-            AddChessPiece(Piece.whiteKnight, "g1");
-            AddChessPiece(Piece.whiteQueen, "d1");
-            AddChessPiece(Piece.whiteKing, "e1");
-            AddChessPiece(Piece.whitePawn, "a2");
-            AddChessPiece(Piece.whitePawn, "b2");
-            AddChessPiece(Piece.whitePawn, "c2");
-            AddChessPiece(Piece.whitePawn, "d2");
-            AddChessPiece(Piece.whitePawn, "e2");
-            AddChessPiece(Piece.whitePawn, "f2");
-            AddChessPiece(Piece.whitePawn, "g2");
-            AddChessPiece(Piece.whitePawn, "h2");
+            AddChessPiece(Piece.whiteRook, PieceType.ROOK, Colors.White, "a1");
+            AddChessPiece(Piece.whiteRook, PieceType.ROOK, Colors.White, "h1");
+            AddChessPiece(Piece.whiteBishop, PieceType.BISHOP, Colors.White, "c1");
+            AddChessPiece(Piece.whiteBishop, PieceType.BISHOP, Colors.White, "f1");
+            AddChessPiece(Piece.whiteKnight, PieceType.KNIGHT, Colors.White, "b1");
+            AddChessPiece(Piece.whiteKnight, PieceType.KNIGHT, Colors.White, "g1");
+            AddChessPiece(Piece.whiteQueen, PieceType.QUEEN, Colors.White, "d1");
+            AddChessPiece(Piece.whiteKing, PieceType.KING, Colors.White, "e1");
+            AddChessPiece(Piece.whitePawn, PieceType.PAWN, Colors.White, "a2");
+            AddChessPiece(Piece.whitePawn, PieceType.PAWN, Colors.White, "b2");
+            AddChessPiece(Piece.whitePawn, PieceType.PAWN, Colors.White, "c2");
+            AddChessPiece(Piece.whitePawn, PieceType.PAWN, Colors.White, "d2");
+            AddChessPiece(Piece.whitePawn, PieceType.PAWN, Colors.White, "e2");
+            AddChessPiece(Piece.whitePawn, PieceType.PAWN, Colors.White, "f2");
+            AddChessPiece(Piece.whitePawn, PieceType.PAWN, Colors.White, "g2");
+            AddChessPiece(Piece.whitePawn, PieceType.PAWN, Colors.White, "h2");
         }
 
-        private void AddChessPiece(string source, string location)
+        private void AddChessPiece(string source, PieceType type, Color color, string location)
         {
-            Image piece = new Image();
+            Piece piece = new Piece(type, color, ChessBoard.boardLoc(location));
+            piece.GetLocation().CollectionChanged += listen;
+            piece.MouseDown += clickPiece;
+            piece.MouseUp += TakePiece;
             BitmapImage logo = new BitmapImage();
             logo.BeginInit();
             logo.UriSource = new Uri(source);
@@ -114,6 +117,7 @@ namespace ChessAI
                             rect.Fill = new SolidColorBrush(Color.FromRgb(116, 148, 84));
                             Grid.SetColumn(rect, lett);
                             Grid.SetRow(rect, num);
+                            rect.MouseUp += MovePiece;
                             chessBoard.Children.Add(rect);
                         } else
                         {
@@ -121,6 +125,7 @@ namespace ChessAI
                             rect.Fill = new SolidColorBrush(Color.FromRgb(236, 236, 212));
                             Grid.SetColumn(rect, lett);
                             Grid.SetRow(rect, num);
+                            rect.MouseUp += MovePiece;
                             chessBoard.Children.Add(rect);
                         }
                     } else // odd
@@ -131,7 +136,7 @@ namespace ChessAI
                             rect.Fill = new SolidColorBrush(Color.FromRgb(116, 148, 84));
                             Grid.SetColumn(rect, lett);
                             Grid.SetRow(rect, num);
-
+                            rect.MouseUp += MovePiece;
                             chessBoard.Children.Add(rect);
                         } else
                         {
@@ -139,6 +144,7 @@ namespace ChessAI
                             rect.Fill = new SolidColorBrush(Color.FromRgb(236, 236, 212));
                             Grid.SetColumn(rect, lett);
                             Grid.SetRow(rect, num);
+                            rect.MouseUp += MovePiece;
                             chessBoard.Children.Add(rect);
                         }
                     }
@@ -146,14 +152,83 @@ namespace ChessAI
             }
         }
 
-        private void MenuItem_Click_1(object sender, RoutedEventArgs e)
+        private void TakePiece(object sender, RoutedEventArgs e)
         {
-            blackPieces[0, 0].movePiece(4, 4);
+            if(pieceToMove != null && pieceToMove.GetPieceColor() != ((Piece)sender).GetPieceColor())
+            {
+                int[,] moves = pieceToMove.ValidMoves(this);
+                if(moves != null)
+                {
+                    for (int i = 0; i < (moves.Length) / 2; i++)
+                    {
+                        if (pieceToMove.ValidMoves(this)[i, col] == Grid.GetColumn((UIElement)sender) && pieceToMove.ValidMoves(this)[i, row] == Grid.GetRow((UIElement)sender))
+                        {
+                            chessBoard.Children.Remove((UIElement)sender);
+                            pieceToMove.MovePiece(Grid.GetColumn((UIElement)sender), Grid.GetRow((UIElement)sender));
+                            pieceToMove = null;
+                            turn = (turn == Colors.White) ? Colors.Black : Colors.White;
+                            Console.WriteLine("Moved Piece");
+                            break;
+                        }
+                    }
+                }
+            }
         }
 
-        private void MenuItem_Click(object sender, RoutedEventArgs e)
+        private void MovePiece(object sender, RoutedEventArgs e)
+        {
+            if(pieceToMove != null)
+            {
+                int[,] moves = pieceToMove.ValidMoves(this);
+                if (moves != null)
+                {
+                    for (int i = 0; i < (pieceToMove.ValidMoves(this).Length) / 2; i++)
+                    {
+                        if (pieceToMove.ValidMoves(this)[i, col] == Grid.GetColumn((UIElement)sender) && pieceToMove.ValidMoves(this)[i, row] == Grid.GetRow((UIElement)sender))
+                        {
+                            pieceToMove.MovePiece(Grid.GetColumn((UIElement)sender), Grid.GetRow((UIElement)sender));
+                            pieceToMove = null;
+                            turn = (turn == Colors.White) ? Colors.Black : Colors.White;
+                            Console.WriteLine("Moved Piece");
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+
+        private void clickPiece(object sender, RoutedEventArgs e)
+        {
+            if(((Piece)sender).GetPieceColor().Equals(turn))
+            {
+                pieceToMove = ((Piece)sender);
+                Console.WriteLine("Selected Piece");
+            }
+        }
+
+        public Piece GetPieceAt(int col, int row)
+        {
+            foreach (UIElement ele in chessBoard.Children)
+            {
+                if(Grid.GetColumn(ele) == col && Grid.GetRow(ele) == row && ele is Piece)
+                {
+                    return (Piece)ele;
+                }
+            }
+            return null;
+        }
+
+        private void ExitClick(object sender, RoutedEventArgs e)
         {
             Application.Current.Shutdown();
+        }
+
+        private void ResetBoard(object sender, RoutedEventArgs e)
+        {
+            chessBoard.Children.Clear();
+            turn = Colors.White;
+            InitChessBoard();
+            FillChessBoard();
         }
     }
 }
