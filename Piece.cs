@@ -162,20 +162,83 @@ namespace ChessAI
         private int[,] ValidBishop(MainWindow main)
         {
             List<int[]> moves = new List<int[]>();
-            if (color == Colors.White)
+            bool hitObstacle = false;
+            for (int i = 1; !hitObstacle; i++)
             {
-                bool hitObstacle = false;
-                for(int i = 0; !hitObstacle; i++)
+                if (location[col] + i >= 8 || location[row] + i >= 8)
                 {
-                    if(location[col] + i >= 8 && location[row] + i >= 8)
+                    break;
+                }
+                else
+                {
+                    if (main.GetPieceAt(location.ElementAt(col) + i, location.ElementAt(row) + i) == null)
                     {
+                        moves.Add(new int[2] { location.ElementAt(col) + i, location.ElementAt(row) + i });
+                    }
+                    else if (main.GetPieceAt(location.ElementAt(col) + i, location.ElementAt(row) + i).GetPieceColor() != color)
+                    {
+                        moves.Add(new int[2] { location.ElementAt(col) + i, location.ElementAt(row) + i });
                         break;
-                    } else
+                    }
+                }
+            }
+            hitObstacle = false;
+            for (int i = 1; !hitObstacle; i++)
+            {
+                if (location[col] - i < 0 || location[row] + i >= 8)
+                {
+                    break;
+                }
+                else
+                {
+                    if (main.GetPieceAt(location.ElementAt(col) - i, location.ElementAt(row) + i) == null)
                     {
-                        if (main.GetPieceAt(location.ElementAt(col) + i, location.ElementAt(row) + i) != null)
-                        {
-                            moves.Add(new int[2] { location.ElementAt(col) + i, location.ElementAt(row) + i});
-                        }
+                        moves.Add(new int[2] { location.ElementAt(col) - i, location.ElementAt(row) + i });
+                    }
+                    else if (main.GetPieceAt(location.ElementAt(col) - i, location.ElementAt(row) + i).GetPieceColor() != color)
+                    {
+                        moves.Add(new int[2] { location.ElementAt(col) - i, location.ElementAt(row) + i });
+                        break;
+                    }
+                }
+            }
+            hitObstacle = false;
+            for (int i = 1; !hitObstacle; i++)
+            {
+                if (location[col] + i >= 8 || location[row] - i < 0)
+                {
+                    break;
+                }
+                else
+                {
+                    if (main.GetPieceAt(location.ElementAt(col) + i, location.ElementAt(row) - i) == null)
+                    {
+                        moves.Add(new int[2] { location.ElementAt(col) + i, location.ElementAt(row) - i });
+                    }
+                    else if (main.GetPieceAt(location.ElementAt(col) + i, location.ElementAt(row) - i).GetPieceColor() != color)
+                    {
+                        moves.Add(new int[2] { location.ElementAt(col) + i, location.ElementAt(row) - i });
+                        break;
+                    }
+                }
+            }
+            hitObstacle = false;
+            for (int i = 1; !hitObstacle; i++)
+            {
+                if (location[col] - i < 0 || location[row] - i < 0)
+                {
+                    break;
+                }
+                else
+                {
+                    if (main.GetPieceAt(location.ElementAt(col) - i, location.ElementAt(row) - i) == null)
+                    {
+                        moves.Add(new int[2] { location.ElementAt(col) - i, location.ElementAt(row) - i });
+                    }
+                    else if (main.GetPieceAt(location.ElementAt(col) - i, location.ElementAt(row) - i).GetPieceColor() != color)
+                    {
+                        moves.Add(new int[2] { location.ElementAt(col) - i, location.ElementAt(row) - i });
+                        break;
                     }
                 }
             }
@@ -185,24 +248,84 @@ namespace ChessAI
         private int[,] ValidRook(MainWindow main)
         {
             List<int[]> moves = new List<int[]>();
-            if (color == Colors.White)
+            bool hitObstacle = false;
+            for (int i = 1; !hitObstacle; i++)
             {
-                if (!(main.GetPieceAt(location.ElementAt(col), location.ElementAt(row) + 1) is Piece))
+                if (location[col] + i >= 8)
                 {
-                    moves.Add(new int[2] { location.ElementAt(col), location.ElementAt(row) + 1 });
-                    if (main.GetPieceAt(location.ElementAt(col), location.ElementAt(row) + 2) == null)
+                    break;
+                }
+                else
+                {
+                    if (main.GetPieceAt(location.ElementAt(col) + i, location.ElementAt(row)) == null)
                     {
-                        moves.Add(new int[2] { location.ElementAt(col), location.ElementAt(row) + 2 });
+                        moves.Add(new int[2] { location.ElementAt(col) + i, location.ElementAt(row)});
+                    }
+                    else if (main.GetPieceAt(location.ElementAt(col) + i, location.ElementAt(row)).GetPieceColor() != color)
+                    {
+                        moves.Add(new int[2] { location.ElementAt(col) + i, location.ElementAt(row)});
+                        break;
                     }
                 }
-
-                if ((main.GetPieceAt(location.ElementAt(col) + 1, location.ElementAt(row) + 1) == null))
+            }
+            hitObstacle = false;
+            for (int i = 1; !hitObstacle; i++)
+            {
+                if (location[row] + i >= 8)
                 {
-                    moves.Add(new int[2] { location.ElementAt(col) + 1, location.ElementAt(row) + 1 });
+                    break;
                 }
-                if ((main.GetPieceAt(location.ElementAt(col) - 1, location.ElementAt(row) + 1) == null))
+                else
                 {
-                    moves.Add(new int[2] { location.ElementAt(col) - 1, location.ElementAt(row) + 1 });
+                    if (main.GetPieceAt(location.ElementAt(col), location.ElementAt(row) + i) == null)
+                    {
+                        moves.Add(new int[2] { location.ElementAt(col), location.ElementAt(row) + i });
+                    }
+                    else if (main.GetPieceAt(location.ElementAt(col), location.ElementAt(row) + i).GetPieceColor() != color)
+                    {
+                        moves.Add(new int[2] { location.ElementAt(col), location.ElementAt(row) + i });
+                        break;
+                    }
+                }
+            }
+            hitObstacle = false;
+            for (int i = 1; !hitObstacle; i++)
+            {
+                if (location[row] - i < 0)
+                {
+                    break;
+                }
+                else
+                {
+                    if (main.GetPieceAt(location.ElementAt(col), location.ElementAt(row) - i) == null)
+                    {
+                        moves.Add(new int[2] { location.ElementAt(col), location.ElementAt(row) - i });
+                    }
+                    else if (main.GetPieceAt(location.ElementAt(col), location.ElementAt(row) - i).GetPieceColor() != color)
+                    {
+                        moves.Add(new int[2] { location.ElementAt(col), location.ElementAt(row) - i });
+                        break;
+                    }
+                }
+            }
+            hitObstacle = false;
+            for (int i = 1; !hitObstacle; i++)
+            {
+                if (location[col] - i < 0)
+                {
+                    break;
+                }
+                else
+                {
+                    if (main.GetPieceAt(location.ElementAt(col) - i, location.ElementAt(row)) == null)
+                    {
+                        moves.Add(new int[2] { location.ElementAt(col) - i, location.ElementAt(row) });
+                    }
+                    else if (main.GetPieceAt(location.ElementAt(col) - i, location.ElementAt(row)).GetPieceColor() != color)
+                    {
+                        moves.Add(new int[2] { location.ElementAt(col) - i, location.ElementAt(row)});
+                        break;
+                    }
                 }
             }
             int[][] arrays = moves.Select(a => a.ToArray()).ToArray();
@@ -263,26 +386,19 @@ namespace ChessAI
         private int[,] ValidQueen(MainWindow main)
         {
             List<int[]> moves = new List<int[]>();
-            if (color == Colors.White)
-            {
-                if (!(main.GetPieceAt(location.ElementAt(col), location.ElementAt(row) + 1) is Piece))
-                {
-                    moves.Add(new int[2] { location.ElementAt(col), location.ElementAt(row) + 1 });
-                    if (main.GetPieceAt(location.ElementAt(col), location.ElementAt(row) + 2) == null)
-                    {
-                        moves.Add(new int[2] { location.ElementAt(col), location.ElementAt(row) + 2 });
-                    }
-                }
 
-                if ((main.GetPieceAt(location.ElementAt(col) + 1, location.ElementAt(row) + 1) == null))
-                {
-                    moves.Add(new int[2] { location.ElementAt(col) + 1, location.ElementAt(row) + 1 });
-                }
-                if ((main.GetPieceAt(location.ElementAt(col) - 1, location.ElementAt(row) + 1) == null))
-                {
-                    moves.Add(new int[2] { location.ElementAt(col) - 1, location.ElementAt(row) + 1 });
-                }
+            int[,] locations = ValidBishop(main);
+            for (int i = 0; i < locations.Length/2; i++)
+            {
+                moves.Add(new int[2] { locations[i, col], locations[i, row] });
             }
+
+            locations = ValidRook(main);
+            for (int i = 0; i < locations.Length / 2; i++)
+            {
+                moves.Add(new int[2] { locations[i, col], locations[i, row] });
+            }
+
             int[][] arrays = moves.Select(a => a.ToArray()).ToArray();
             return to2d(arrays);
         }
